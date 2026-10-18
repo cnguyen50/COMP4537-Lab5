@@ -13,5 +13,5 @@ CREATE USER IF NOT EXISTS 'lab5_reader'@'%'
 IDENTIFIED BY 'REPLACE_WITH_READER_PASSWORD';
 
 GRANT SELECT
-ON lab5.patient
+ON lab5.*
 TO 'lab5_reader'@'%';

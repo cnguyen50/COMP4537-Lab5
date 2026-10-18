@@ -31,6 +31,14 @@ class ApiServer {
         res.end(status === 204 ? "" : JSON.stringify(data));
     }
 
+    removeSurroundingQuotes(query) {
+        if (query.length >= 2 && query.startsWith('"') && query.endsWith('"')) {
+            return query.slice(1, -1).trim();
+        }
+        
+        return query;
+    }
+
     async handleRequest(req, res) {
         if (req.method === "OPTIONS") {
             this.sendResponse(res, 204, {});
@@ -58,6 +66,7 @@ class ApiServer {
 
                 try {
                     query = decodeURIComponent(encodedQuery).trim();
+                    query = this.removeSurroundingQuotes(query);
                 } catch (error) {
                     this.sendResponse(res, 400, {
                         message: MESSAGES.invalidQuery
